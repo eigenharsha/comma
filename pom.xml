@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.ebenso</groupId>
+    <artifactId>ebenso-comma</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0.0-SNAPSHOT</version>
+    <modules>
+        <module>comma-exception</module>
+        <module>comma-logger</module>
+        <module>comma</module>
+        <module>comma-test</module>
+        <!--<module>comma-thrift</module>-->
+    </modules>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.2.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <dependencies>
+        <!--mockito unit test-->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>2.19.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>2.19.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <!--<distributionManagement>-->
+        <!--<repository>-->
+            <!--<id>${repository.id}</id>-->
+            <!--<url>${repository.url.release}</url>-->
+        <!--</repository>-->
+        <!--<snapshotRepository>-->
+            <!--<id>${repository.id}</id>-->
+            <!--<url>${repository.url.snapshot}</url>-->
+        <!--</snapshotRepository>-->
+    <!--</distributionManagement>-->
+
+    <!--configure multiple profile-->
+    <!--1. prod-->
+    <!--2. staging-->
+    <!--3. dev (default)-->
+    <!--<profiles>-->
+        <!--<profile>-->
+            <!--<id>prod</id>-->
+            <!--<activation>-->
+                <!--<property>-->
+                    <!--<name>env.APP_ENVIRONMENT</name>-->
+                    <!--<value>prod</value>-->
+                <!--</property>-->
+            <!--</activation>-->
+            <!--<properties>-->
+                <!--<repository.id>release</repository.id>-->
+                <!--<repository.url.release>http://repo1.maven.org/maven2/</repository.url.release>-->
+                <!--<repository.url.snapshot>http://repo1.maven.org/maven2/</repository.url.snapshot>-->
+            <!--</properties>-->
+        <!--</profile>-->
+        <!--<profile>-->
+            <!--<id>stag</id>-->
+            <!--<activation>-->
+                <!--<property>-->
+                    <!--<name>env.APP_ENVIRONMENT</name>-->
+                    <!--<value>stag</value>-->
+                <!--</property>-->
+            <!--</activation>-->
+            <!--<properties>-->
+                <!--<repository.id>release</repository.id>-->
+                <!--<repository.url.release>http://repo1.maven.org/maven2/</repository.url.release>-->
+                <!--<repository.url.snapshot>http://repo1.maven.org/maven2/</repository.url.snapshot>-->
+            <!--</properties>-->
+        <!--</profile>-->
+        <!--<profile>-->
+            <!--<id>dev</id>-->
+            <!--<activation>-->
+                <!--<activeByDefault>true</activeByDefault>-->
+                <!--<property>-->
+                    <!--<name>env.ENVIRONMENT_NAME</name>-->
+                    <!--<value>dev</value>-->
+                <!--</property>-->
+            <!--</activation>-->
+            <!--<properties>-->
+                <!--<repository.id>release</repository.id>-->
+                <!--<repository.url.release>http://repo1.maven.org/maven2/</repository.url.release>-->
+                <!--<repository.url.snapshot>http://repo1.maven.org/maven2/</repository.url.snapshot>-->
+            <!--</properties>-->
+        <!--</profile>-->
+    <!--</profiles>-->
+
+    <build>
+        <extensions>
+            <extension>
+                <groupId>org.kuali.maven.wagons</groupId>
+                <artifactId>maven-s3-wagon</artifactId>
+                <version>1.2.1</version>
+            </extension>
+        </extensions>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!--<layout>MODULE</layout>-->
+                    <skip>true</skip>
+                    <classifier>exec</classifier>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-dependency-plugin</artifactId>-->
+                <!--<version>2.10</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>unpack-zip</id>-->
+                        <!--<phase>prepare-package</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>unpack-dependencies</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<includeGroupIds>com.newrelic.agent.java</includeGroupIds>-->
+                            <!--<includeArtifactIds>newrelic-java</includeArtifactIds>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>target/generated-sources/gen-javabean</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <failOnError>false</failOnError>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--JUnit test suites runner -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.12.1</version>
+                <!--<configuration>-->
+                    <!--<includes>-->
+                        <!--<include>**/com.your.packaged.Sample.java</include>-->
+                    <!--</includes>-->
+                <!--</configuration>-->
+            </plugin>
+
+        </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+    </build>
+
+</project>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>ebenso-comma</artifactId>
+        <groupId>org.ebenso</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <packaging>jar</packaging>
+    <artifactId>comma</artifactId>
+    <version>1.1.6-SNAPSHOT</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <gwt.version>2.7.0</gwt.version>
+        <thrift.exe>thrift</thrift.exe>
+        <thrift.interface>${basedir}/src/main/thrift/main.thrift</thrift.interface>
+        <gendir.target>${basedir}/target/generated-sources</gendir.target>
+        <thrift.version>0.11.0</thrift.version>
+        <platform.thrift.extension.version>0.0.3</platform.thrift.extension.version>
+        <scheduler.core.version>0.0.2</scheduler.core.version>
+        <springfox.swagger.version>2.9.2</springfox.swagger.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.ebenso</groupId>
+            <artifactId>comma-exception</artifactId>
+            <version>1.1.1-SNAPSHOT</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>27.0.1-jre</version>
+        </dependency>
+
+        <!--properties file configuration-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>io.projectreactor</groupId>-->
+            <!--<artifactId>reactor-test</artifactId>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!--swagger-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${springfox.swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${springfox.swagger.version}</version>
+        </dependency>
+        <!--end swagger dependency-->
+
+        <dependency>
+            <groupId>org.apache.thrift</groupId>
+            <artifactId>libthrift</artifactId>
+            <version>${thrift.version}</version>
+        </dependency>
+        <!--end of thrift dependency-->
+
+    </dependencies>
+    <!--end of logger-->
+
+    <!--configure repo path for staging and prod-->
+    <!--<repositories>-->
+        <!--<repository>-->
+            <!--<id>release</id>-->
+            <!--<url>${repository.url.release}</url>-->
+        <!--</repository>-->
+        <!--<repository>-->
+            <!--<id>snapshot</id>-->
+            <!--<url>${repository.url.snapshot}</url>-->
+        <!--</repository>-->
+    <!--</repositories>-->
+
+    <!--<distributionManagement>-->
+        <!--<repository>-->
+            <!--<id>${repository.id}</id>-->
+            <!--<url>${repository.url.release}</url>-->
+        <!--</repository>-->
+        <!--<snapshotRepository>-->
+            <!--<id>${repository.id}</id>-->
+            <!--<url>${repository.url.snapshot}</url>-->
+        <!--</snapshotRepository>-->
+    <!--</distributionManagement>-->
+
+    <!--configure multiple profile-->
+    <!--1. prod-->
+    <!--2. staging-->
+    <!--<profiles>-->
+        <!--<profile>-->
+            <!--<id>prod</id>-->
+            <!--<activation>-->
+                <!--<property>-->
+                    <!--<name>env.ENVIRONMENT_NAME</name>-->
+                    <!--<value>prod</value>-->
+                <!--</property>-->
+            <!--</activation>-->
+            <!--<properties>-->
+                <!--<repository.id>release</repository.id>-->
+                <!--<repository.url.release>http://repo1.maven.org/maven2/</repository.url.release>-->
+                <!--<repository.url.snapshot>http://repo1.maven.org/maven2/</repository.url.snapshot>-->
+            <!--</properties>-->
+        <!--</profile>-->
+        <!--<profile>-->
+            <!--<id>stag</id>-->
+            <!--<activation>-->
+                <!--<activeByDefault>true</activeByDefault>-->
+                <!--<property>-->
+                    <!--<name>env.ENVIRONMENT_NAME</name>-->
+                    <!--<value>staging</value>-->
+                <!--</property>-->
+            <!--</activation>-->
+            <!--<properties>-->
+                <!--<repository.id>release</repository.id>-->
+                <!--<repository.url.release>http://repo1.maven.org/maven2/</repository.url.release>-->
+                <!--<repository.url.snapshot>http://repo1.maven.org/maven2/</repository.url.snapshot>-->
+            <!--</properties>-->
+        <!--</profile>-->
+    <!--</profiles>-->
+</project>

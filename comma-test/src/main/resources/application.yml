@@ -1,0 +1,27 @@
+spring:
+  profile:
+    active: true
+
+logging:
+  level:
+    org:
+      springframework: TRACE
+
+server:
+  port: 9334
+
+app:
+  java:
+    version: @java.version@
+  encoding: @project.build.sourceEncoding@
+
+comma:
+  swagger:
+    ui:
+      contact: kumar.harsha@oyorooms.com
+      license: oyo
+
+management:
+  endpoint:
+    health:
+      show-details: ALWAYS
