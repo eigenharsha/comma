@@ -22,7 +22,7 @@
         <thrift.exe>thrift</thrift.exe>
         <thrift.interface>${basedir}/src/main/thrift/main.thrift</thrift.interface>
         <gendir.target>${basedir}/target/generated-sources</gendir.target>
-        <thrift.version>0.11.0</thrift.version>
+        <thrift.version>0.12.0</thrift.version>
         <platform.thrift.extension.version>0.0.3</platform.thrift.extension.version>
         <scheduler.core.version>0.0.2</scheduler.core.version>
         <springfox.swagger.version>2.9.2</springfox.swagger.version>
